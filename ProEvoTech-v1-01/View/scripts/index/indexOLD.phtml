@@ -1,0 +1,177 @@
+<script type="text/javascript">
+var chart;
+var contadores = new Array();
+var indexContador = 0;
+var options = {
+	chart: { 
+		animation: false
+	},
+	exporting: { enabled: false}, 
+	credits: { enabled: false},
+	title: { text: ''},
+	subtitle: { text: ''},
+
+	xAxis: {
+		type: 'datetime',
+		tickInterval: 3600 * 1000, // una hora
+		tickWidth: 0,
+		gridLineWidth: 1,
+		labels: {
+			align: 'left',
+			x: 3,
+			y: -3 
+		}
+	},
+	
+	yAxis: [{
+		title: { text: null},
+		labels: {
+			align: 'left',
+			x: 3,
+			y: 16,
+			formatter: function() {
+				return Highcharts.numberFormat(this.value, 0);
+			}
+		},
+		showFirstLabel: false
+	}],
+	
+	legend: {
+		align: 'left',
+		verticalAlign: 'top',
+		y: 20,
+		floating: true,
+		borderWidth: 0
+	},					
+	tooltip: {
+		shared: false, 
+		crosshairs: true, 
+		formatter: function() {
+			var fecha = new Date(this.x);
+			var hora = fecha.getHours() + 3;
+			return 'Produccion a las <b>'+ 
+				(hora <= 9 ? "0" + hora : hora) + ":" + 
+				(fecha.getMinutes() <= 9 ? "0" + fecha.getMinutes() : fecha.getMinutes()) + 
+				'</b>: <b>'+ this.y +'</b>';
+		}
+	},					
+	series: [{
+		name: 'Produccion',
+		lineWidth: 10,
+		marker: {
+			radius: 0
+		},
+		zIndex: 2
+	}, {
+		name: 'Objetivo',
+		lineWidth: 10,
+		marker: {
+			radius: 0
+		},
+		zIndex: 1
+	}]
+};
+
+function loadContador() {
+	var contadores = Array();
+
+<?
+	$i=0;
+	foreach($this->contadores as $cont):
+		echo "contadores[$i] = ".$cont->Id.';';
+		$i++;
+	endforeach;
+?>
+	
+	if (indexContador < contadores.length) {
+		var idContador = contadores[indexContador];
+		$.post('<?=$this->baseUrl('index/get-json');?>', { contador: idContador }, function(data) {
+			var produccion = [];
+			var objetivos = [];
+			var hoy = new Date();
+
+			for (var i = 0; i < data.datos.length; i++) {
+				var fechaProduccion = new Date(
+					hoy.getFullYear(), 
+					hoy.getMonth(), 
+					hoy.getDate(), 
+					parseInt(data.datos[i].f.split(":")[0], 10) - 3, 
+					parseInt(data.datos[i].f.split(":")[1], 10), 0, 0
+				);
+				produccion.push([
+					fechaProduccion.getTime(),
+					data.datos[i].c
+				]);
+			}
+
+			for (var i = 0; i < data.rangos.length; i++) {
+				var fechaObjetivo = new Date(
+					hoy.getFullYear(), 
+					hoy.getMonth(), 
+					hoy.getDate(), 
+					parseInt(data.rangos[i].f.split(":")[0], 10) - 3, 
+					parseInt(data.rangos[i].f.split(":")[1], 10), 0, 0
+				);
+				objetivos.push([
+					fechaObjetivo.getTime(),
+					data.rangos[i].c
+				]);
+			}
+			
+			options.chart.renderTo = "container"+ idContador;
+
+			$("#contadorLinea" + idContador + " .titulo").text(data.nombre);
+			$("#contadorLinea" + idContador + " .contadorProduccion").text(data.produccion);
+			var objetivo = data.produccion - data.objetivo; 
+			if (objetivo < 0) {
+				$("#contadorLinea" + idContador + " .contadorProduccion").css("color", "#c60000");
+			} else {
+				$("#contadorLinea" + idContador + " .contadorProduccion").css("color", "#388336");
+			}
+			$("#contadorLinea" + idContador + " .contadorObjetivo").text("(" + (objetivo < 0 ? objetivo : "+" + objetivo) +  ")");
+			$("#contadorLinea" + idContador + " .contadorTargetFinal").text("Objetivo: " + data.objetivoFinal);
+			$("#contadorLinea" + idContador + " .contadorIdeal").text("Producción Ideal: " + data.objetivo);
+			
+			options.series[0].data = produccion;
+			options.series[1].data = objetivos;
+			
+			chart = new Highcharts.Chart(options);
+			
+			indexContador++;
+			loadContador();
+		}, "json");
+	} else {
+		indexContador = 0;
+	}
+}
+
+setInterval(loadContador, 1000 * 60 * <?= $this->refresh; ?>); // <?= $this->refresh; ?> minutos
+		
+$(document).ready(function() {
+	// Cargo los contadores
+	loadContador();
+});
+</script>
+<div class="clear-both">
+	<a id="usuario" class="transparente boton ui-button ui-widget ui-state-default ui-corner-all" href="<?= $this->baseUrl('usuario/logout');?>">Cambiar Usuario</a>
+</div>
+<?
+	$i=0;
+	foreach($this->contadores as $contadores):
+?> 
+	<div id="contadorLinea<?=$contadores->Id?>" style="text-align: center; width:<? echo (100/count($this->contadores)); ?>%; float: left;">
+		<div class="titulo" style="font-family: Arial; font-size: 0.8em; font-weight: bold;"></div>
+		<div class="contadorProduccion" style="font-family: Arial; font-size: 3.5em; font-weight: bold;"></div>
+		<div class="contadorIdeal" style="font-family: Arial; font-size: 2em; font-weight: bold;">(0)</div>
+		<div class="contadorObjetivo" style="font-family: Arial; font-size: 2em; font-weight: bold;">(0)</div>
+		<div class="contadorTargetFinal" style="font-family: Arial; font-size: 0.6em; font-weight: bold;"></div>
+		<div id="container<?=$contadores->Id?>" style="width: 100%; margin: 0 auto"></div>
+	</div>
+<? 
+	endforeach;
+?>
+
+<div id="info">
+	<p>Actualizando cada: <span class="color"><?= $this->refresh; ?> Minutos</span></p>
+	<p>Usuario: <span class="color"><?= $this->usuario->Nombre; ?></span></p>
+</div>

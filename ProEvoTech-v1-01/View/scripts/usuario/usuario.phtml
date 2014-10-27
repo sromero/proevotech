@@ -1,0 +1,52 @@
+<style>
+#minutos{
+	margin: 20px auto;
+}
+
+#slider {
+	margin: 10px auto;
+	width: 350px;
+	border: 1px solid #F6931F;
+}
+</style>
+<script type="text/javascript">
+$(document).ready( function(){
+	$('#usuarios-combobox').change( function(){
+
+		if($(this).val() != -1)
+			$('#form-usuario').submit();
+		return false;
+	});	
+
+	//configuracion de slider 
+	$('#slider' ).slider({
+		value:15,
+		min: 1,
+		max: 60,
+		step: 5,
+		slide: function( event, ui ) {
+			$('#minutos').val(ui.value + ' Minutos');
+			$('#refresh' ).val(ui.value);
+		}
+	});
+		
+});
+</script>
+<h1 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">Contador de Lineas</h1>
+<div id="usuarios" class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-state-hover">
+	<p>Seleccione un usuario</p>
+	<form id="form-usuario" action="<?= $this->baseUrl('index/index'); ?>" method="post">
+		<select id="usuarios-combobox" name="usuario">
+			<option value="-1" selected="selected">Elija un usuario</option>
+<? 
+	foreach ($this->usuarios as $usuario):
+		echo '<option value="'.$usuario->Id.'"> '.$usuario->Nombre.' </option>';
+	endforeach;	 
+?>
+		</select>
+		<label for="minutos">Actualizar cada:</label>
+		<input type="text" id="minutos" value="15 Minutos" disabled="disabled" style="border:0; background: transparent; color:#f6931f; font-weight:bold;" />
+		<input name="refresh" value="15" type="hidden" id="refresh" />
+	</form>
+</div>
+<div id="slider"></div>

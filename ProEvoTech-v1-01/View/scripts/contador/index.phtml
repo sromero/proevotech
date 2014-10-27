@@ -1,0 +1,19 @@
+<h1 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">Contador de Lineas</h1>
+<br/>
+<h3>Actualizar Objetivos</h3>
+
+<ul id="lista-objetivos">
+<?php 
+foreach($this->contadores as $contador):
+?>
+	<li class="objetivo">
+		<a href="<?= $this->baseUrl('contador/update-objective/id/'.$contador->Id);?>">
+		Objetivo Actual: <span class="color"><?=$contador->Objetivo?></span> 
+		Contador: <span class="color"><?=$contador->Nombre?></span>
+		</a>
+	</li>
+<?php 	
+endforeach;	
+?>
+</ul>
+<a href="<?= $this->baseUrl('administrador/index'); ?>" class="boton ui-button ui-widget ui-state-default ui-corner-all">Volver</a>

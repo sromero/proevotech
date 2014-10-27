@@ -1,0 +1,10 @@
+<h1 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">Contador de Lineas</h1>
+<br/>
+<?php 
+if(isset($this->error)):
+	echo '<h3>'.$this->error.'</h3>';
+else :
+	echo '<h3>Configuracion creada correctamente</h3>';
+endif; 
+?>
+<a href="<?= $this->baseUrl('configuracion/index'); ?>" class="boton ui-button ui-widget ui-state-default ui-corner-all">Volver</a>

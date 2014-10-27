@@ -1,0 +1,20 @@
+<h1 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all">Contador de Lineas</h1>
+<br/>
+<h3>Crear nueva configuración</h3>
+<div class="formulario">
+	<?= $this->form; ?>
+</div>
+<a href="<?= $this->baseUrl('administrador/index'); ?>" class="boton ui-button ui-widget ui-state-default ui-corner-all">Volver</a>
+
+<script type="text/javascript">
+$(function(){
+  	$('#Contador').multiselect({sortable: false});
+  	
+});
+</script>
+<style>
+#Contador {
+	width: 400px;
+	height: 200px;
+}
+</style>
