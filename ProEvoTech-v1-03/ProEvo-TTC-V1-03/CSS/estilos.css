@@ -1,0 +1,240 @@
+.barra{
+	background: #59ff15;
+	background: -moz-linear-gradient(top, #ff3019 0%, #cf0404 100%);
+	background: -webkit-linear-gradient(top, #ff3019 0%,#cf0404 100%);
+	background: linear-gradient(to bottom, #ff3019 0%,#cf0404 100%);
+	clear: both;
+	height: 15px;
+	color: white;
+	font-weight: bold;
+	text-align: right;
+	padding: 6px;
+	border-radius: 4px;
+	max-width: 356px;
+	min-width: 20px;
+}
+
+{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	font-size: 14px;
+}
+body{
+	background: #46646;
+}
+a{
+	text-decoration: none;
+	color: blue;
+}
+.fr{
+	float: right;
+}
+.fl, .votar{
+
+	float: left;
+}
+.fl, .votar{
+
+	float: left;
+}
+.cf{
+	clear: both;
+}
+.config {
+	position:absolute;
+	width: 180px;
+	padding:2px;
+	background: #F3F3F3;
+	margin-left: 26%;
+	text-align:left;	
+}
+.cf {
+	clear: both;
+}
+.wrap{
+	padding: 25px;
+	margin: 0 auto;
+	width: 885px;
+	background: #F3F3F3;
+	border-radius: 8px;
+	margin-top: 70px;
+	border: 2px solid black;
+}
+
+h1{
+	margin-bottom: 20px;
+	font-size: 21px;
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 15px;
+	text-align: center;
+}
+form > div{
+	margin-bottom: 20px;
+}
+form .titulo{
+	margin-right: 20px;
+}
+form label{
+	display: block;
+}
+form input[type='text'], select{
+	border: 1px solid #E0E0E0;
+	padding: 6px;
+	resize: none;
+}
+form input[type="submit"]{
+	padding: 8px 16px;
+	background: gray;
+	border: 0;
+	display: block;
+	font-weight: bold;
+	color: white;
+	border-radius: 6px;
+}
+form input[type="submit"]:hover{
+	background: #505050;
+}
+a.edit{
+	margin-left:20%;
+}
+a.eliminar{
+	margin-left:20%;
+}
+ul.votacion{
+	margin-bottom: 22px;
+	list-style-type: none;
+}
+
+.votacion li{
+	margin-right:30px;
+	padding: 4px;
+	background: Silver;
+	border-radius: 1px;
+	margin-bottom: 5px;
+	list-style-type:none;
+}
+.votacion li:hover{
+	background: #ddd;
+}
+.votacion li a{
+	color: black;
+	font-weight: bold;
+	font-size: 18px;
+}
+.votacion li a:hover{
+	color: black;
+}
+.votacion li span{
+	margin-left: 5px;
+}
+.votacion .fl{
+	margin-bottom: 5px;
+}
+
+.resultado{
+	display:absolute;
+	float: right;
+	margin-left: 10px;
+	margin-top: 7px;
+	color: black;
+}
+h1{
+border-bottom: double;
+}
+.field{
+
+	width:170px;
+	padding-left:5px;
+}
+
+
+.button {        
+    display: inline-block;
+    white-space: nowrap;
+    background-color: #ccc;
+    background-image: linear-gradient(top, #eee, #ccc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#cccccc');
+    border: 1px solid #777;
+    padding: 0 1.5em;
+    margin: 0.5em;
+    font: bold 1em/2em Arial, Helvetica;
+    text-decoration: none;
+    color: #333;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    border-radius: .2em;
+    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
+
+.button:hover {
+    background-color: #ddd;        
+    background-image: linear-gradient(top, #fafafa, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');        
+}
+
+.button:active {
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    position: relative;
+    top: 1px;
+}
+
+.button:focus {
+    outline: 0;
+    background: #fafafa;
+}    
+
+.button:before {
+    background: #ccc;
+    background: rgba(0,0,0,.1);
+    float: left;        
+    width: 1em;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0 1em 0 -1em;
+    padding: 0 .2em;
+    box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+    border-radius: .15em 0 0 .15em;
+    pointer-events: none;        
+}
+
+/* Hexadecimal entities for the icons */
+
+.add:before {
+    content: "\271A";
+}
+
+.edit:before {
+    content: "\270E";        
+}
+
+.delete:before {
+    content: "\2718";	
+}
+
+.save:before {
+    content: "\2714";        
+}
+
+.email:before {
+    content: "\2709";        
+}
+
+.like:before {
+    content: "\2764";        
+}
+
+.volver:before {
+    content: "\2190";
+}
+
+.star:before {
+    content: "\2605";
+}
+
+.spark:before {
+    content: "\2737";
+}
+
+.play:before {
+    content: "\25B6";
+}
